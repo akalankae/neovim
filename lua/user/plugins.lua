@@ -28,8 +28,10 @@ function()
   use 'tpope/vim-commentary'    -- "gc" to comment visual selection/lines
 
   -- Git
-  use  'tpope/vim-fugitive'     -- Git support
-  use  'tpope/vim-rhubarb'      -- GitHub support
+  use  'tpope/vim-fugitive'                   -- Git support
+  use  'tpope/vim-rhubarb'                    -- GitHub support
+  use { 'lewis6991/gitsigns.nvim',
+    requires = { 'nvim-lua/plenary.nvim' } }  -- Git info in signcolumns & popups
 
   -- Colorschemes
   use 'gruvbox-community/gruvbox' -- Community groove colorscheme
