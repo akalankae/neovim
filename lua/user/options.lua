@@ -55,3 +55,5 @@ vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 vim.opt.completeopt = {"menu", "menuone", "noselect"}
 vim.opt.dictionary = '/usr/share/dict/allwords.txt'
 vim.opt.cmdheight = 2
+
+vim.opt.splitbelow = true
