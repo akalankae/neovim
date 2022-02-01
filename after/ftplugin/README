@@ -1,0 +1,10 @@
+Set local options that will be used for relevant filetype.
+
+If you want to set unique options for C source files, create a file inside this
+direcotry named `c.vim` (or `c.lua`), and put options as setlocal (or vim.opt_local)
+
+e.g.
+```
+setlocal noexpandtab
+setlocal tabstop=8
+```
