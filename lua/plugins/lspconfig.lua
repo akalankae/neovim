@@ -51,18 +51,22 @@ local servers = {
 }
 
 for _, server in ipairs(servers) do
-  nvim_lsp[server].setup{
-    on_attach = custom_attach_func
-  }
-  -- Get rid of annoying error msg: 'undefined global "vim"'
+  -- Lua:
+  -- Add "vim" to known global variables table to get rid of annoying error
+  -- msg: undefined global "vim"
   if server == "sumneko_lua" then
     nvim_lsp[server].setup{
+      on_attach = custom_attach_func,
       settings = {
         Lua = {
           diagnostics = { globals = {"vim"} }
         }
       }
-
+    }
+  -- Rest of the languages
+  else
+    nvim_lsp[server].setup{
+      on_attach = custom_attach_func
     }
   end
 end
