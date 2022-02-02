@@ -48,6 +48,7 @@ local servers = {
   "jedi_language_server",           -- Python
   "sumneko_lua",                    -- Lua
   "gopls",                          -- Go
+  "ccls",                           -- C | C++ | Objective-C
 }
 
 for _, server in ipairs(servers) do
@@ -61,6 +62,17 @@ for _, server in ipairs(servers) do
         Lua = {
           diagnostics = { globals = {"vim"} }
         }
+      }
+    }
+  -- C | C++
+  elseif server == "ccls" then
+    nvim_lsp[server].setup{
+      on_attach = custom_attach_func,
+      init_options = {
+        cache = { directory = ".ccls-cache" },
+        -- compilationDatabaseDirectory = "build",
+        -- index = { threads = 0 },
+        -- clang = { excludeArgs = { "-frounding-math" } },
       }
     }
   -- Rest of the languages
