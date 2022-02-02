@@ -1,10 +1,18 @@
 require('gitsigns').setup {
+  -- signs = {
+  --   add          = {hl = 'GitSignsAdd'   , text = '│', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
+  --   change       = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+  --   delete       = {hl = 'GitSignsDelete', text = '_', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+  --   topdelete    = {hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+  --   changedelete = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+  -- },
+  -- Grabbed from OJRoques init.lua
   signs = {
-    add          = {hl = 'GitSignsAdd'   , text = '│', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
-    change       = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
-    delete       = {hl = 'GitSignsDelete', text = '_', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-    topdelete    = {hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-    changedelete = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+    add = {text = '+'},
+    change = {text = '~'},
+    delete = {text = '-'},
+    topdelete = {text = '-'},
+    changedelete = {text = '≃'},
   },
   signcolumn = true,  -- Toggle with `:Gitsigns toggle_signs`
   numhl      = false, -- Toggle with `:Gitsigns toggle_numhl`
@@ -40,4 +48,28 @@ require('gitsigns').setup {
   yadm = {
     enable = false
   },
+  on_attach = function()
+
+    local opts = {noremap=true, silent=true}
+    local function set_keymap(mode, lhs, rhs)
+      vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
+    end
+
+    -- gitsigns actions keymappings
+    set_keymap('n', '<leader>hs', '<Cmd>Gitsigns stage_hunk<CR>')
+    set_keymap('n', '<leader>hr', '<Cmd>Gitsigns reset_hunk<CR>')
+    set_keymap('n', '<leader>hS', '<Cmd>Gitsigns stage_buffer<CR>')
+    set_keymap('n', '<leader>hu', '<Cmd>Gitsigns undo_stage_hunk<CR>')
+    set_keymap('n', '<leader>hR', '<Cmd>Gitsigns reset_buffer<CR>')
+    set_keymap('n', '<leader>hp', '<Cmd>Gitsigns preview_hunk<CR>')
+    set_keymap('n', '<leader>hb', '<Cmd>Gitsigns blame_line({full=true})<CR>')
+    set_keymap('n', '<leader>tb', '<Cmd>Gitsigns toggle_current_line_blame<CR>')
+    set_keymap('n', '<leader>hd', '<Cmd>Gitsigns diffthis<CR>')
+    set_keymap('n', '<leader>hD', '<Cmd>Gitsigns diffthis("~")<CR>')
+    set_keymap('n', '<leader>td', '<Cmd>Gitsigns toggle_deleted<CR>')
+
+    -- Text object
+    set_keymap('o', 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+    set_keymap('x', 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+  end,
 }
