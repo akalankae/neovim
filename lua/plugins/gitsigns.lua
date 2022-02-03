@@ -1,19 +1,23 @@
 require('gitsigns').setup {
-  -- signs = {
-  --   add          = {hl = 'GitSignsAdd'   , text = '│', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
-  --   change       = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
-  --   delete       = {hl = 'GitSignsDelete', text = '_', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-  --   topdelete    = {hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-  --   changedelete = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
-  -- },
-  -- Grabbed from OJRoques init.lua
+  -- New-style gitsigns symbols, from default configuration
   signs = {
-    add = {text = '+'},
-    change = {text = '~'},
-    delete = {text = '-'},
-    topdelete = {text = '-'},
-    changedelete = {text = '≃'},
+    --  text = '∥│'
+    add          = {hl = 'GitSignsAdd'   , text = '+', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
+    change       = {hl = 'GitSignsChange', text = '┃', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+    -- text = '_'
+    delete       = {hl = 'GitSignsDelete', text = '━', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+    topdelete    = {hl = 'GitSignsDelete', text = '✗', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+    -- text = '~〜'
+    changedelete = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
   },
+  -- -- Old-style gitsigns symbols, grabbed from OJRoques init.lua
+  -- signs = {
+  --   add = {text = '+'},
+  --   change = {text = '~'},
+  --   delete = {text = '-'},
+  --   topdelete = {text = '-'},
+  --   changedelete = {text = '≃'},
+  -- },
   signcolumn = true,  -- Toggle with `:Gitsigns toggle_signs`
   numhl      = false, -- Toggle with `:Gitsigns toggle_numhl`
   linehl     = false, -- Toggle with `:Gitsigns toggle_linehl`
@@ -48,24 +52,29 @@ require('gitsigns').setup {
   yadm = {
     enable = false
   },
-  on_attach = function()
+  on_attach = function(bufnr)
 
-    local opts = {noremap=true, silent=true}
-    local function set_keymap(mode, lhs, rhs)
-      vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
+    local function set_keymap(mode, lhs, rhs, opts)
+      opts = vim.tbl_extend('force', {noremap=true, silent=true}, opts or {})
+      vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
     end
 
-    -- gitsigns actions keymappings
+    -- Keymappings for navigation
+    set_keymap('n', ']c', "&diff ? ']c' : '<Cmd>Gitsigns next_hunk<CR>'", {expr=true})
+    set_keymap('n', '[c', "&diff ? '[c' : '<Cmd>Gitsigns prev_hunk<CR>'", {expr=true})
+    -- Keymappings for actions
     set_keymap('n', '<leader>hs', '<Cmd>Gitsigns stage_hunk<CR>')
+    set_keymap('v', '<leader>hs', '<Cmd>Gitsigns stage_hunk<CR>')
     set_keymap('n', '<leader>hr', '<Cmd>Gitsigns reset_hunk<CR>')
+    set_keymap('v', '<leader>hr', '<Cmd>Gitsigns reset_hunk<CR>')
     set_keymap('n', '<leader>hS', '<Cmd>Gitsigns stage_buffer<CR>')
     set_keymap('n', '<leader>hu', '<Cmd>Gitsigns undo_stage_hunk<CR>')
     set_keymap('n', '<leader>hR', '<Cmd>Gitsigns reset_buffer<CR>')
     set_keymap('n', '<leader>hp', '<Cmd>Gitsigns preview_hunk<CR>')
-    set_keymap('n', '<leader>hb', '<Cmd>Gitsigns blame_line({full=true})<CR>')
+    set_keymap('n', '<leader>hb', '<Cmd>lua require("gitsigns").blame_line({full=true})<CR>')
     set_keymap('n', '<leader>tb', '<Cmd>Gitsigns toggle_current_line_blame<CR>')
     set_keymap('n', '<leader>hd', '<Cmd>Gitsigns diffthis<CR>')
-    set_keymap('n', '<leader>hD', '<Cmd>Gitsigns diffthis("~")<CR>')
+    set_keymap('n', '<leader>hD', '<Cmd>lua require("gitsigns").diffthis("~")<CR>')
     set_keymap('n', '<leader>td', '<Cmd>Gitsigns toggle_deleted<CR>')
 
     -- Text object
