@@ -12,8 +12,8 @@ vim.opt.cindent = true
 vim.opt.breakindent = true
 
 -- Text dispaly area setup
-vim.opt.textwidth = 86
-vim.opt.colorcolumn = '+1'
+vim.opt.textwidth = 0
+vim.opt.wrapmargin = 2
 vim.opt.signcolumn = 'yes'
 
 -- Show line numbers
