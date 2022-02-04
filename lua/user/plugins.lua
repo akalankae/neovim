@@ -59,5 +59,8 @@ function()
   use 'L3MON4D3/luasnip'
   use 'saadparwaiz1/cmp_luasnip'
 
+  -- Navigate seamlessly between Vim and Tmux splits using a consistant set of hotkeys.
+  use 'christoomey/vim-tmux-navigator'
+
 end
 )
