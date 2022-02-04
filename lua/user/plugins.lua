@@ -48,11 +48,12 @@ function()
   use 'neovim/nvim-lspconfig'
   use 'williamboman/nvim-lsp-installer'
 
-  -- Autocompletion and its sources
+  -- Autocompletion engine and sources
   use 'hrsh7th/nvim-cmp'
   use 'hrsh7th/cmp-nvim-lsp'
   use 'hrsh7th/cmp-path'
   use 'hrsh7th/cmp-buffer'
+  -- use 'hrsh7th/cmp-cmdline'       -- NOT YET!
 
   -- Snippet engine
   use 'L3MON4D3/luasnip'

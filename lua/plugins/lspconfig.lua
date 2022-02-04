@@ -36,20 +36,35 @@ local custom_attach_func = function(client, bufnr)
   buf_set_keymap('n', '<Leader>rn', '<Cmd>lua vim.lsp.buf.rename()<CR>', opts)
 
   -- CODE ACTION: Select a code action available at current cursor postion.
-  buf_set_keymap('n', '<Leader>ca', '<Cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  buf_set_keymap('n', '<Leader>ca', '<Cmd>lua vim.lsp.buf.code_action()<CR>', opts)
 
   -- FORMAT: Format the current buffer
-  buf_set_keymap('n', '<Leader>ff', '<Cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  buf_set_keymap('n', '<Leader>ff', '<Cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+
+  -- DIAGNOSTICS: goto next | goto previous | list | in floating window
+  -- Goto next
+  buf_set_keymap('n', '<Leader>dn', '<Cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+  -- Goto previous
+  buf_set_keymap('n', '<Leader>dp', '<Cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+  -- In floating window
+  buf_set_keymap('n', '<Leader>df', '<Cmd>lua vim.diagnostic.open_float()<CR>', opts)
+  -- Add/create/replace to location list for window
+  buf_set_keymap('n', '<Leader>dl', '<Cmd>lua vim.diagnostic.setloclist()<CR>', opts)
+  -- buf_set_keymap('n', '<Leader>dl', '<Cmd>Telescope diagnostics<CR>', opts)
+  -- NOTE: Once you get the Diagnostic List, <C-q> gets them into a quick-fix list
 end
 
 -- Setup installed language servers
 local nvim_lsp = require("lspconfig")
 local servers = {
-  "jedi_language_server",           -- Python
+  -- "jedi_language_server",           -- Python
+  "pyright",                        -- Python
   "sumneko_lua",                    -- Lua
   "gopls",                          -- Go
   "ccls",                           -- C | C++ | Objective-C
+  "clangd",                         -- C | C++ | Objective-C
 }
+local server_capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 for _, server in ipairs(servers) do
   -- Lua:
@@ -57,16 +72,18 @@ for _, server in ipairs(servers) do
   -- msg: undefined global "vim"
   if server == "sumneko_lua" then
     nvim_lsp[server].setup{
+      capabilities = server_capabilities,
       on_attach = custom_attach_func,
       settings = {
         Lua = {
-          diagnostics = { globals = {"vim"} }
+          diagnostics = { globals = {"vim", "use"} }
         }
       }
     }
   -- C | C++
   elseif server == "ccls" then
     nvim_lsp[server].setup{
+      capabilities = server_capabilities,
       on_attach = custom_attach_func,
       init_options = {
         cache = { directory = ".ccls-cache" },
@@ -78,7 +95,8 @@ for _, server in ipairs(servers) do
   -- Rest of the languages
   else
     nvim_lsp[server].setup{
-      on_attach = custom_attach_func
+      capabilities = server_capabilities,
+      on_attach = custom_attach_func,
     }
   end
 end
