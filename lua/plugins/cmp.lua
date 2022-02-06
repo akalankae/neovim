@@ -2,9 +2,9 @@
 -- it with sources.
 
 -- Setup nvim-cmp.
-local cmp = require'cmp'
+local cmp = require('cmp')
 
-cmp.setup({
+cmp.setup {
   snippet = {
     expand = function(args)
       require('luasnip').lsp_expand(args.body)
@@ -19,7 +19,11 @@ cmp.setup({
       i = cmp.mapping.abort(),
       c = cmp.mapping.close(),
     }),
-    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    -- Accept currently selected item.
+    -- When no item is selected do not automatically select first item
+    -- Set `select` to `false` to only confirm explicitly selected items.
+    -- Set `select` to `true` to select the first item.
+    ['<CR>'] = cmp.mapping.confirm({ select = false }),
   },
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
@@ -27,4 +31,4 @@ cmp.setup({
   }, {
     { name = 'buffer' },
   })
-})
+}
