@@ -1,4 +1,7 @@
 -- Configuration for neovim native LSP
+-- NOTE: Individual LSP servers are setup by lua config files in
+-- 'stdpath("data")/plugged/nvim-lspconfig/lua/lspconfig' directory
+-- If the LSP server is known to nvim-lspconfig it is found as "SERVER_NAME.lua"
 
 -- Map following keys for NORMAL mode, but only after a language server attaches to
 -- current buffer.
@@ -41,7 +44,7 @@ local custom_attach_func = function(client, bufnr)
   -- FORMAT: Format the current buffer
   buf_set_keymap('n', '<Leader>ff', '<Cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 
-  -- DIAGNOSTICS: goto next | goto previous | list | in floating window
+  -- DIAGNOSTICS:
   -- Goto next
   buf_set_keymap('n', '<Leader>dn', '<Cmd>lua vim.diagnostic.goto_next()<CR>', opts)
   -- Goto previous
@@ -50,6 +53,7 @@ local custom_attach_func = function(client, bufnr)
   buf_set_keymap('n', '<Leader>df', '<Cmd>lua vim.diagnostic.open_float()<CR>', opts)
   -- Add/create/replace to location list for window
   buf_set_keymap('n', '<Leader>dl', '<Cmd>lua vim.diagnostic.setloclist()<CR>', opts)
+  -- Once you have Telescope installed uncomment line below and remove line above
   -- buf_set_keymap('n', '<Leader>dl', '<Cmd>Telescope diagnostics<CR>', opts)
   -- NOTE: Once you get the Diagnostic List, <C-q> gets them into a quick-fix list
 end
@@ -61,8 +65,8 @@ local servers = {
   "pyright",                        -- Python
   "sumneko_lua",                    -- Lua
   "gopls",                          -- Go
-  "ccls",                           -- C | C++ | Objective-C
-  "clangd",                         -- C | C++ | Objective-C
+  -- "ccls",                           -- C | C++ | Objective-C
+  "clangd",                         -- C | C++
 }
 local server_capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
@@ -87,9 +91,9 @@ for _, server in ipairs(servers) do
       on_attach = custom_attach_func,
       init_options = {
         cache = { directory = ".ccls-cache" },
-        -- compilationDatabaseDirectory = "build",
-        -- index = { threads = 0 },
-        -- clang = { excludeArgs = { "-frounding-math" } },
+        compilationDatabaseDirectory = "build",
+        index = { threads = 0 },
+        clang = { excludeArgs = { "-frounding-math" } },
       }
     }
   -- Rest of the languages
