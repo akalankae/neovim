@@ -56,4 +56,10 @@ vim.opt.completeopt = {"menu", "menuone", "noselect"}
 vim.opt.dictionary = '/usr/share/dict/allwords.txt'
 vim.opt.cmdheight = 2
 
+-- Make new splits appear below and to the right of current one
 vim.opt.splitbelow = true
+vim.opt.splitright = true
+
+-- Make visible invisible whitespace characters
+vim.opt.listchars = { nbsp = '+', trail = 'ᐊ', eol = "↲", tab = "❰━❱"}
+-- vim.opt.list = true
