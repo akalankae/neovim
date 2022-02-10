@@ -4,6 +4,7 @@
 -- Setup nvim-cmp.
 local cmp = require('cmp')
 local luasnip = require('luasnip')
+-- local tabout = require('tabout')  -- Needs tabout.nvim plugin
 
 cmp.setup {
   snippet = {
