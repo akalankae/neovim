@@ -3,6 +3,7 @@
 
 -- Setup nvim-cmp.
 local cmp = require('cmp')
+local luasnip = require('luasnip')
 
 cmp.setup {
   snippet = {
@@ -23,12 +24,36 @@ cmp.setup {
     -- When no item is selected do not automatically select first item
     -- Set `select` to `false` to only confirm explicitly selected items.
     -- Set `select` to `true` to select the first item.
-    ['<CR>'] = cmp.mapping.confirm({ select = false }),
-  },
+
+    ['<CR>'] = cmp.mapping.confirm({
+      behavior = cmp.ConfirmBehavior.Insert,
+      select = false }),
+    ['<Tab>'] = cmp.mapping(
+    function(fallback)
+      if luasnip.expandable() then
+        luasnip.expand()
+      elseif cmp.visible() then
+        cmp.select_next_item()
+        -- elseif vim.api.nvim_get_mode().mode == 'i' then
+        --   tabout.tabout()
+      else
+        fallback()
+      end
+    end, {'i', 's'}),
+    ['<S-Tab>'] = cmp.mapping(
+    function (fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+        elseif luasnip.jumptable(-1) then
+          luasnip.jump(-1)
+        else
+          fallback()
+      end
+    end, {'i', 's'})
+    },
   sources = cmp.config.sources({
-    { name = 'nvim_lsp' },
     { name = 'luasnip' },
-  }, {
+    { name = 'nvim_lsp' },
     { name = 'buffer' },
   })
 }
