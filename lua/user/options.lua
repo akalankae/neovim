@@ -61,5 +61,5 @@ vim.opt.splitbelow = true
 vim.opt.splitright = true
 
 -- Make visible invisible whitespace characters
-vim.opt.listchars = { nbsp = '+', trail = 'ᐊ', eol = "↲", tab = "❰━❱"}
--- vim.opt.list = true
+vim.opt.list = false      -- Enable to see whitespace characters
+vim.opt.listchars = { nbsp = '+', trail = '●', eol = "↲", tab = "━━"}
