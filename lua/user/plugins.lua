@@ -36,8 +36,9 @@ function()
   -- Colorschemes
   use 'gruvbox-community/gruvbox' -- Community groove colorscheme
   use 'joshdick/onedark.vim'      -- Theme inspired by Atom
-  use 'shaunsingh/nord.nvim'      -- Modern colorscheme written in lua
   use 'EdenEast/nightfox.nvim'    -- A dark neovim theme written in lua
+  use 'tomasr/molokai'            -- Vim port of Monokai theme for TextMate
+  use 'dracula/vim'               -- A dark theme for vim and others
   use 'vim-scripts/CycleColor'    -- Cycle through colorschemes in runtimepath
 
   -- Snappy statusline in Lua
