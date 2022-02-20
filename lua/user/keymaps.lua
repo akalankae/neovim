@@ -29,3 +29,6 @@ vim.api.nvim_set_keymap("n", "<Leader>cl", "<Cmd>nohlsearch<CR>", {noremap=true}
 
 -- Capitalize previous word in INSERT mode
 vim.api.nvim_set_keymap("i", "<C-u>", "<Esc>viwUea", {noremap=true})
+
+-- Map dictioanary completion default mapping <C-x><C-k> to <C-d> in INSERT mode
+vim.api.nvim_set_keymap('i', '<C-d>', '<C-x><C-k>', {noremap=true})
