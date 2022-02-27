@@ -63,5 +63,8 @@ function()
   -- Navigate seamlessly between Vim and Tmux splits using a consistant set of hotkeys.
   use 'christoomey/vim-tmux-navigator'
 
+  -- Persist and toggle multiple terminals during vim session
+  use 'akinsho/toggleterm.nvim'
+
 end
 )
