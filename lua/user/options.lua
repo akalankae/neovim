@@ -66,3 +66,10 @@ vim.opt.splitright = true
 -- Make visible invisible whitespace characters
 vim.opt.list = false      -- Enable to see whitespace characters
 vim.opt.listchars = { nbsp = '+', trail = '●', eol = "↲", tab = "━━"}
+
+-- Setup path of python3 executable to work with virtual environments
+if vim.env.VIRTUAL_ENV ~= nil then
+  vim.g.python3_host_prog = vim.env.VIRTUAL_ENV .. "/bin/python3"
+else
+  vim.g.python3_host_prog = '/usr/bin/python3'
+end
