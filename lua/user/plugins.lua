@@ -56,6 +56,9 @@ function()
   use 'hrsh7th/cmp-buffer'
   -- use 'hrsh7th/cmp-cmdline'       -- NOT YET!
 
+  -- Treesitter for parsing source code
+  use { 'nvim-treesitter/nvim-treesitter', run = "<Cmd>TSUpdate"}
+
   -- Snippet engine
   use 'L3MON4D3/luasnip'
   use 'saadparwaiz1/cmp_luasnip'
