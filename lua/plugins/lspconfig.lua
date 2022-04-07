@@ -56,13 +56,37 @@ local custom_attach_func = function(client, bufnr)
   -- Once you have Telescope installed uncomment line below and remove line above
   -- buf_set_keymap('n', '<Leader>dl', '<Cmd>Telescope diagnostics<CR>', opts)
   -- NOTE: Once you get the Diagnostic List, <C-q> gets them into a quick-fix list
+
+end
+
+-- Get path of python3 executable for current python3 virtual environment
+local util = require("lspconfig/util")
+
+local path = util.path
+
+local function get_python_path(workspace)
+  -- Use active virtual environment
+  if vim.env.VIRTUAL_ENV then
+    return path.join(vim.env.VIRTUAL_ENV, "bin", "python")
+  end
+
+  -- Find and use virtualenv from pipenv in workspace directory
+  local match = vim.fn.glob(path.join(workspace, 'Pipfile'))
+  if match ~= '' then
+    local venv = vim.fn.trim(vim.fn.system('PIPENV_PIPFILE=' .. match .. ' pipenv --venv'))
+    return path.join(venv, 'bin', 'python')
+  end
+
+  -- Fallback to system python
+  return vim.fn.exepath("python3") or vim.fn.exepath('python') or 'python'
 end
 
 -- Setup installed language servers
 local nvim_lsp = require("lspconfig")
 local servers = {
-  -- "jedi_language_server",           -- Python
   "pyright",                        -- Python
+  -- "jedi_language_server",           -- Python
+  -- "pylsp",                          -- Python
   "sumneko_lua",                    -- Lua
   "gopls",                          -- Go
   -- "ccls",                           -- C | C++ | Objective-C
@@ -96,7 +120,16 @@ for _, server in ipairs(servers) do
         clang = { excludeArgs = { "-frounding-math" } },
       }
     }
-  -- Rest of the languages
+  -- Python3
+  elseif server == "pyright" then
+    nvim_lsp[server].setup {
+      capabilities = server_capabilities,
+      on_attach = custom_attach_func,
+      on_init = function(client)
+        client.config.settings.python.pythonPath = get_python_path(client.config.root_dir)
+      end,
+    }
+  -- Other languages
   else
     nvim_lsp[server].setup{
       capabilities = server_capabilities,
