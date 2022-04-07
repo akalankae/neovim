@@ -42,4 +42,6 @@ endfunction
 " augroup END
 
 " Use skeleton file for lua
-autocmd BufNewFile *.lua 0read $NVIM_DATA_DIR/templates/skel.lua
+autocmd BufNewFile *.lua 0read $NVIM_DATA_DIR/templates/template.lua
+autocmd BufNewFile *.c   0read $NVIM_DATA_DIR/templates/template.c
+autocmd BufNewFile *.py  0read $NVIM_DATA_DIR/templates/template.py
