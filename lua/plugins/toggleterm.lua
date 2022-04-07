@@ -15,7 +15,7 @@ require("toggleterm").setup {
   hide_numbers = true,    -- hide the number column in toggleterm buffers
   shade_filetypes = {},
   shade_terminals = true,
-  shading_factor = 2,     -- degree by which to darken to terminal colour,
+  shading_factor = 4,     -- degree by which to darken to terminal colour,
                           -- default: 1 for dark backgrounds, 3 for light backgrounds
   start_in_insert = true,
   insert_mappings = true, -- whether the open mapping applies in insert mode or not
