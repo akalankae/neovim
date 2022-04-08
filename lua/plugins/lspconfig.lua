@@ -40,9 +40,11 @@ local custom_attach_func = function(client, bufnr)
 
   -- CODE ACTION: Select a code action available at current cursor postion.
   buf_set_keymap('n', '<Leader>ca', '<Cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  buf_set_keymap('x', '<Leader>ca', '<Cmd>lua vim.lsp.buf.range_code_action()<CR>', { silent=true })
 
   -- FORMAT: Format the current buffer
   buf_set_keymap('n', '<Leader>ff', '<Cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+  buf_set_keymap('x', '<Leader>ff', '<Cmd>lua vim.lsp.buf.range_formatting()<CR>', opts)
 
   -- DIAGNOSTICS:
   -- Goto next
