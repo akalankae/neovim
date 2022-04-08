@@ -5,7 +5,7 @@
 
 -- Map following keys for NORMAL mode, but only after a language server attaches to
 -- current buffer.
-local custom_attach_func = function(client, bufnr)
+local custom_attach_func = function(_, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
@@ -88,11 +88,11 @@ local nvim_lsp = require("lspconfig")
 local servers = {
   "pyright",                        -- Python
   -- "jedi_language_server",           -- Python
-  -- "pylsp",                          -- Python
   "sumneko_lua",                    -- Lua
   "gopls",                          -- Go
   -- "ccls",                           -- C | C++ | Objective-C
   "clangd",                         -- C | C++
+  "tsserver",                       -- Typescript server
 }
 local server_capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
@@ -131,6 +131,14 @@ for _, server in ipairs(servers) do
         client.config.settings.python.pythonPath = get_python_path(client.config.root_dir)
       end,
     }
+  -- HTML
+  elseif server == "html" then
+    local html_server_capabilities = vim.lsp.protocol.make_client_capabilities()
+    html_server_capabilities.textDocument.completion.completionItem.snippetSupport = true
+    nvim_lsp[server].setup {
+      capabilities = html_server_capabilities,
+      on_attach = custom_attach_func,
+    }
   -- Other languages
   else
     nvim_lsp[server].setup{
@@ -139,3 +147,16 @@ for _, server in ipairs(servers) do
     }
   end
 end
+
+-- Enable update on insert ( Issue #19 )
+vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics,
+  {
+    underline = true,
+    virtual_text = {
+      spacing = 5,
+      severity_limit = 'Warning',
+    },
+    update_in_insert = true,
+  }
+)
