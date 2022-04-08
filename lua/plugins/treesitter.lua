@@ -31,7 +31,7 @@ require("nvim-treesitter.configs").setup {
   indent = {
     enable = true,
     -- List of languages to diable treesitter based indentation
-    disable = { "c" },
+    disable = { "c", "python" },
   },
 
   -- Configs for treesitter based rainbow parenthesis plugin
