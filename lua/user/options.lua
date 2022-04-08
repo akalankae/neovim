@@ -36,7 +36,7 @@ vim.opt.undofile = true
 vim.opt.termguicolors = true
 
 -- Select 1 out of 5 random colorscheme
-local colorschemes = {'molokai', 'gruvbox', 'onedark', 'nightfox', 'solarized8_high', 'dracula'}
+local colorschemes = {'molokai', 'gruvbox', 'onedark', 'nightfox', 'dracula', 'codedark', 'everforest'}
 math.randomseed(os.clock())
 -- vim.g.colors_name = colorschemes[math.random(#colorschemes)] NOTE: not working!
 vim.cmd('colorscheme ' .. colorschemes[math.random(#colorschemes)])
