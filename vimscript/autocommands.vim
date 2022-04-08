@@ -17,6 +17,9 @@ autocmd VimLeave * silent! !xmodmap -e "clear Lock" -e "keycode 0x42 = Caps_Lock
 autocmd FileType python let b:AutoPairs = AutoPairsDefine({ "f'" : "'", "r'" : "'" })
 autocmd FileType html,xml let b:AutoPairs = AutoPairsDefine({ "<" : ">" })
 
+" Auto-complete HTML tags with omnicomplete
+autocmd FileType html inoremap </ </<C-x><C-o>
+
 " Remove trailing whitespace & blank lines
 autocmd FileType python,c,cpp,lua,vim autocmd BufWritePre <buffer> %s/\s\+$//e
 autocmd FileType python,c,cpp,lua,vim autocmd BufWritePre <buffer> %s/\($\n\s*\)\+\%$//e
