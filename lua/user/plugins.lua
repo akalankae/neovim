@@ -34,12 +34,15 @@ function()
     requires = { 'nvim-lua/plenary.nvim' } }  -- Git info in signcolumns & popups
 
   -- Colorschemes
+  use 'vim-scripts/CycleColor'    -- Cycle through colorschemes in runtimepath
   use 'gruvbox-community/gruvbox' -- Community groove colorscheme
   use 'joshdick/onedark.vim'      -- Theme inspired by Atom
   use 'EdenEast/nightfox.nvim'    -- A dark neovim theme written in lua
   use 'tomasr/molokai'            -- Vim port of Monokai theme for TextMate
   use 'dracula/vim'               -- A dark theme for vim and others
-  use 'vim-scripts/CycleColor'    -- Cycle through colorschemes in runtimepath
+  use 'sainnhe/everforest'        -- Green based warm & soft colorscheme to protect your eyes
+  -- use 'tjdevries/colorbuddy'
+  use 'tomasiser/vim-code-dark'   -- Inspired by Dark+ colorscheme of VSCode
 
   -- Snappy statusline in Lua
   use { 'nvim-lualine/lualine.nvim',
@@ -59,7 +62,8 @@ function()
     -- Treesitter for parsing source code
   use { 'nvim-treesitter/nvim-treesitter', run = ":TSUpdate"}
   -- plugins using Treesitter
-  use 'p00f/nvim-ts-rainbow'
+  use 'p00f/nvim-ts-rainbow'        -- Paint nested parentheses with colors of the rainbow
+  use 'windwp/nvim-ts-autotag'      -- ERROR: not-working, autoclose and autorename HTML tags using treesitter
 
   -- Snippet engine
   use 'L3MON4D3/luasnip'
