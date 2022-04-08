@@ -34,7 +34,8 @@ require("nvim-treesitter.configs").setup {
     disable = { "c", "python" },
   },
 
-  -- Configs for treesitter based rainbow parenthesis plugin
+  -- Treesitter based plugins
+  -- Configs for rainbow parenthesis plugin
   rainbow = {
     enable = true,
     -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
@@ -42,5 +43,11 @@ require("nvim-treesitter.configs").setup {
     max_file_lines = nil, -- Do not enable for files with more than n lines, int
     -- colors = {}, -- table of hex strings
     -- termcolors = {} -- table of colour name strings
+
+  },
+  -- Config for nvim-ts-autotag
+  autotag = {
+    enable = true,
+    filetypes = { 'html', 'xml' },
   }
 }
