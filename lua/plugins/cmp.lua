@@ -1,6 +1,10 @@
 -- Configuration of Neovim autocompletion engine nvim-cmp and plugins that provide
 -- it with sources.
 
+-- Add additional capabilites supported by nvim-cmp
+local capabilites = vim.lsp.protocol.make_client_capabilities()
+capabilites = require("cmp_nvim_lsp").update_capabilities(capabilites)
+
 -- Setup nvim-cmp.
 local cmp = require('cmp')
 local luasnip = require('luasnip')
@@ -13,7 +17,9 @@ cmp.setup {
     end,
   },
   mapping = {
-    ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+    ['C-p'] = cmp.mapping(cmp.mapping.select_prev_item(), { 'i', 'c' }),
+    ['C-n'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 'c' }),
+    ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
     ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
     ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
     ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
@@ -27,14 +33,14 @@ cmp.setup {
     -- Set `select` to `true` to select the first item.
 
     ['<CR>'] = cmp.mapping.confirm({
-      behavior = cmp.ConfirmBehavior.Insert,
-      select = false }),
+      behavior = cmp.ConfirmBehavior.Insert, -- OR cmp.ConfirmBehavior.Replace
+      select = false }),                     -- OR true
     ['<Tab>'] = cmp.mapping(
     function(fallback)
-      if luasnip.expandable() then
-        luasnip.expand()
-      elseif cmp.visible() then
+      if cmp.visible() then
         cmp.select_next_item()
+      elseif luasnip.expand_or_jumpable() then
+        vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
         -- elseif vim.api.nvim_get_mode().mode == 'i' then
         --   tabout.tabout()
       else
@@ -46,7 +52,7 @@ cmp.setup {
       if cmp.visible() then
         cmp.select_prev_item()
         elseif luasnip.jumptable(-1) then
-          luasnip.jump(-1)
+          vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
         else
           fallback()
       end
