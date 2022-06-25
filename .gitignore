@@ -4,3 +4,4 @@ temp/
 plugin/
 /.netrwhist
 ojroques_init.lua
+ginit.vim
