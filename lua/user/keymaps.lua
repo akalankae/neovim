@@ -9,26 +9,33 @@
 vim.g.mapleader = ";"
 
 -- Ctrl-j/k/h/l to navigate between splits
-vim.api.nvim_set_keymap('n', '<C-j>', '<C-w>j', {noremap=true})
-vim.api.nvim_set_keymap('n', '<C-k>', '<C-w>k', {noremap=true})
-vim.api.nvim_set_keymap('n', '<C-l>', '<C-w>l', {noremap=true})
-vim.api.nvim_set_keymap('n', '<C-h>', '<C-w>h', {noremap=true})
+vim.keymap.set('n', '<C-j>', '<C-w>j')
+vim.keymap.set('n', '<C-k>', '<C-w>k')
+vim.keymap.set('n', '<C-l>', '<C-w>l')
+vim.keymap.set('n', '<C-h>', '<C-w>h')
 
 -- Go to startify splash screen
-vim.api.nvim_set_keymap('n', '<Leader>a', '<Cmd>Alpha<CR>', {noremap=true})
+vim.keymap.set('n', '<Leader>a', '<Cmd>Alpha<CR>')
 
 -- Ctrl-s to save in NORMAL & INSERT modes
-vim.api.nvim_set_keymap('n', '<C-s>', '<Cmd>w<CR>', {noremap=true})       -- nmap(...)
-vim.api.nvim_set_keymap('i', '<C-s>', '<Esc><Cmd>w<CR>a', {noremap=true}) -- imap(...)
+vim.keymap.set('n', '<C-s>', '<Cmd>w<CR>')       -- nmap(...)
+vim.keymap.set('i', '<C-s>', '<Esc><Cmd>w<CR>a') -- imap(...)
 
 -- Ctrl-q closes current split
-vim.api.nvim_set_keymap('n', '<C-q>', '<C-w>q', {noremap=true})
+vim.keymap.set('n', '<C-q>', '<C-w>q')
 
--- Turn-off highlighted text after a search operation
-vim.api.nvim_set_keymap("n", "<Leader>cl", "<Cmd>nohlsearch<CR>", {noremap=true})
+-- Turn-off highlighted text (e.g. after a search operation)
+vim.keymap.set("n", "<Leader>cl", "<Cmd>nohlsearch<CR>")
 
 -- Capitalize previous word in INSERT mode
-vim.api.nvim_set_keymap("i", "<C-u>", "<Esc>viwUea", {noremap=true})
+vim.keymap.set("i", "<C-u>", "<Esc>viwUea")
 
--- Map dictioanary completion default mapping <C-x><C-k> to <C-d> in INSERT mode
-vim.api.nvim_set_keymap('i', '<C-d>', '<C-x><C-k>', {noremap=true})
+-- Map dictionary completion default mapping <C-x><C-k> to <C-d> in INSERT mode
+vim.keymap.set('i', '<C-d>', '<C-x><C-k>')
+
+-- Show current colorscheme
+vim.keymap.set('n', '<Leader>cs', '<Cmd>colorscheme<CR>')
+
+-- Cycle between available colorschemes (colorscheme next | colorscheme previous)
+vim.keymap.set('n', '<Leader>cn', '<Cmd>CycleColorNext<CR>')
+vim.keymap.set('n', '<Leader>cp', '<Cmd>CycleColorPrev<CR>')
