@@ -78,5 +78,12 @@ function()
   -- Persist and toggle multiple terminals during vim session
   use 'akinsho/toggleterm.nvim'
 
+  -- File explorer for neovim in lua
+  use { 'kyazdani42/nvim-tree.lua',
+  requires = { 'kyazdani42/nvim-web-devicons', -- optional for file icons
+    },
+  tag = 'nightly' -- optional, updated every week
+  }
+
 end
 )
