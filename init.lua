@@ -8,9 +8,6 @@
 -- (e.g paths.lua) so that it will be loaded automatically.
 --------------------------------------------------------------------------------------
 
--- Source vimscript source files
-vim.cmd("source " .. vim.fn.stdpath("config") .. "/vimscript/autocommands.vim")
-
 -- Configs for the user
 require("user")
 
