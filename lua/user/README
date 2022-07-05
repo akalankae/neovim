@@ -1,1 +1,8 @@
 This directory contains configuration files that specify the user preferences.
+
+NOTE: 
+There is no satisfactory way to automatically source the files in this directory
+without explicitly being sourced by $NVIM_CONFIG_DIR/init.lua 
+Therefore, remember to add the name of each file to top-level init.lua at the
+time a new user config file is added to this directory, or it will not be
+sourced.

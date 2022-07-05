@@ -5,6 +5,15 @@
 -- <Cmd> = ":" (same as entering semicolon at the command line)
 --
 -------------------------------------------------------------------------------
+-- Utility functions
+function BackgroundToggle()
+	if vim.o.background == "light" then
+		vim.o.background = "dark"
+	else
+		vim.o.background = "light"
+	end
+end
+
 -- <Leader>
 vim.g.mapleader = ";"
 
@@ -36,6 +45,29 @@ vim.keymap.set('i', '<C-d>', '<C-x><C-k>')
 -- Show current colorscheme
 vim.keymap.set('n', '<Leader>cs', '<Cmd>colorscheme<CR>')
 
--- Cycle between available colorschemes (colorscheme next | colorscheme previous)
-vim.keymap.set('n', '<Leader>cn', '<Cmd>CycleColorNext<CR>')
-vim.keymap.set('n', '<Leader>cp', '<Cmd>CycleColorPrev<CR>')
+-- colorscheme settings
+-- cycle between available colorschemes
+vim.keymap.set("n", "<Leader>cn", "<Cmd>CycleColorNext<CR>") --> colorscheme next
+vim.keymap.set("n", "<Leader>cp", "<Cmd>CycleColorPrev<CR>") --> colorscheme previous
+vim.keymap.set("n", "<Leader>bg", "<Cmd>lua print(vim.o.background)<CR>") --> print light/dark
+vim.keymap.set("n", "<Leader>bt", "<Cmd>lua BackgroundToggle()<CR>") --> light<->dark
+
+-- Keymaps for telescope.nvim (given in github page)
+vim.keymap.set("n", "<Leader>ff", '<Cmd>lua require("telescope.builtin").find_files()<CR>')
+vim.keymap.set("n", "<Leader>fg", '<Cmd>lua require("telescope.builtin").live_grep()<CR>')
+vim.keymap.set("n", "<Leader>fb", '<Cmd>lua require("telescope.builtin").buffers()<CR>')
+vim.keymap.set("n", "<Leader>fh", '<Cmd>lua require("telescope.builtin").help_tags()<CR>')
+
+-- For nvim-tree directory explorer
+vim.keymap.set("n", "<Leader>tt", "<Cmd>NvimTreeToggle<CR>") --> toggle tree
+vim.keymap.set("n", "<Leader>tf", "<Cmd>NvimTreeFocus<CR>") --> focus on tree
+vim.keymap.set("n", "<Leader>tc", "<Cmd>NvimTreeCollapse<CR>") --> collapse recursively
+
+-- Git related keymappings
+-- NOTE: Some Git commands are implemented as abbreviations (abbr.lua)
+vim.keymap.set("n", "<Leader>gs", "<Cmd>Git status<CR>") --> show repo status
+vim.keymap.set("n", "<Leader>ga", "<Cmd>Git add %<CR>") --> git add open file
+vim.keymap.set("n", "<Leader>gr", "<Cmd>Git restore --staged %<CR>") --> remove file from staging area
+vim.keymap.set("n", "<Leader>gp", "<Cmd>Git push<CR>") --> push commits to remote repo
+vim.keymap.set("c", "git", "Git ")
+vim.keymap.set("c", "comm", "commit -m ")

@@ -93,6 +93,7 @@ local servers = {
   -- "ccls",                           -- C | C++ | Objective-C
   "clangd",                         -- C | C++
   "tsserver",                       -- Typescript server
+  "vimls",                          --> Vimscript
 }
 local server_capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
