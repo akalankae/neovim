@@ -9,8 +9,17 @@ end
 
 
 -- Keymaps
-local luasnip = prequire("luasnip")
-local cmp = prequire("cmp")
+local luasnip_okay, luasnip = pcall(prequire, "luasnip")
+if not luasnip_okay then
+  error("Could not import luasnip!")
+  return
+end
+
+local cmp_okay, cmp = pcall(prequire, "cmp")
+if not cmp_okay then
+  error("Could not import cmp!")
+  return
+end
 
 local t = function(str)
     return vim.api.nvim_replace_termcodes(str, true, true, true)
