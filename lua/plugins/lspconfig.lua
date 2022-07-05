@@ -56,14 +56,16 @@ local custom_attach_func = function(_, bufnr)
   -- Add/create/replace to location list for window
   buf_set_keymap('n', '<Leader>dl', '<Cmd>lua vim.diagnostic.setloclist()<CR>', opts)
   -- Once you have Telescope installed uncomment line below and remove line above
-  -- buf_set_keymap('n', '<Leader>dl', '<Cmd>Telescope diagnostics<CR>', opts)
+  buf_set_keymap('n', '<Leader>fd', '<Cmd>Telescope diagnostics<CR>', opts)
   -- NOTE: Once you get the Diagnostic List, <C-q> gets them into a quick-fix list
 
 end
 
+-------------------------------------------------------------------------------
+-- Make neovim-lsp work with python virtual environments
+-------------------------------------------------------------------------------
 -- Get path of python3 executable for current python3 virtual environment
 local util = require("lspconfig/util")
-
 local path = util.path
 
 local function get_python_path(workspace)
@@ -83,8 +85,16 @@ local function get_python_path(workspace)
   return vim.fn.exepath("python3") or vim.fn.exepath('python') or 'python'
 end
 
+-------------------------------------------------------------------------------
+--                       CONFIGURE LANGUAGE SERVERS
+-------------------------------------------------------------------------------
 -- Setup installed language servers
-local nvim_lsp = require("lspconfig")
+local nvim_lsp_ok, nvim_lsp = pcall(require, "lspconfig")
+if not nvim_lsp_ok then
+  error("Cannot import nvim-lspconfig", 2)
+  return
+end
+
 local servers = {
   "pyright",                        -- Python
   -- "jedi_language_server",           -- Python
@@ -94,6 +104,7 @@ local servers = {
   "clangd",                         -- C | C++
   "tsserver",                       -- Typescript server
   "vimls",                          --> Vimscript
+  "cssls",                          --> CSS
 }
 local server_capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
@@ -102,7 +113,7 @@ for _, server in ipairs(servers) do
   -- Add "vim" to known global variables table to get rid of annoying error
   -- msg: undefined global "vim"
   if server == "sumneko_lua" then
-    nvim_lsp[server].setup{
+    nvim_lsp["sumneko_lua"].setup{
       capabilities = server_capabilities,
       on_attach = custom_attach_func,
       settings = {
@@ -113,7 +124,7 @@ for _, server in ipairs(servers) do
     }
   -- C | C++
   elseif server == "ccls" then
-    nvim_lsp[server].setup{
+    nvim_lsp["ccls"].setup{
       capabilities = server_capabilities,
       on_attach = custom_attach_func,
       init_options = {
@@ -125,7 +136,7 @@ for _, server in ipairs(servers) do
     }
   -- Python3
   elseif server == "pyright" then
-    nvim_lsp[server].setup {
+    nvim_lsp["pyright"].setup {
       capabilities = server_capabilities,
       on_attach = custom_attach_func,
       on_init = function(client)
@@ -136,7 +147,7 @@ for _, server in ipairs(servers) do
   elseif server == "html" then
     local html_server_capabilities = vim.lsp.protocol.make_client_capabilities()
     html_server_capabilities.textDocument.completion.completionItem.snippetSupport = true
-    nvim_lsp[server].setup {
+    nvim_lsp["html"].setup {
       capabilities = html_server_capabilities,
       on_attach = custom_attach_func,
     }
@@ -161,3 +172,12 @@ vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
     update_in_insert = true,
   }
 )
+
+-------------------------------------------------------------------------------
+-- Configure LSP diagnostics
+-------------------------------------------------------------------------------
+local signs = { Error = "", Warn = "", Info = "", Hint = "" }
+for type, icon in pairs(signs) do
+	local hl = "DiagnosticSign" .. type
+	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
