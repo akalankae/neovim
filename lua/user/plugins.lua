@@ -44,6 +44,7 @@ require("packer").startup(function()
 	-- use("tjdevries/colorbuddy.nvim") --> Better customization of highlights
 	use("tomasiser/vim-code-dark") -- Inspired by Dark+ colorscheme of VSCode
 	use("folke/tokyonight.nvim") -->   Theme written in Lua ported from VSCode TokyoNight
+	use("pineapplegiant/spaceduck")
 
 	-- Snappy statusline in Lua
 	use({ "nvim-lualine/lualine.nvim", requires = { "kyazdani42/nvim-web-devicons", opt = true } })
@@ -97,6 +98,6 @@ require("packer").startup(function()
 		requires = { "kyazdani42/nvim-web-devicons" }, --> optional for file icons
 		tag = "nightly", --> optional, updated every week
 	})
-  -- nvim-lua-gf: extend "gf" command to jump to files in lua files (e.g. dir1.dir2.file1)
-  use "sam4llis/nvim-lua-gf"
+	-- nvim-lua-gf: extend "gf" command to jump to files in lua files (e.g. dir1.dir2.file1)
+	use("sam4llis/nvim-lua-gf")
 end)

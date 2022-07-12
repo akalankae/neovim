@@ -7,13 +7,16 @@
 -- to put a lua config file in $HOME/.config/nvim/after/ftplugin directory
 -- (e.g paths.lua) so that it will be loaded automatically.
 --------------------------------------------------------------------------------------
-
 -- Configs for the user
--- NOTE: "." may used as path separator in Lua. But, I'm unable to get to jump
--- to files specified this way, at the moment. Therefore, regular path separator
--- ("/") is used here.
--- Plugin nvim-lua-gf is available to do above, but it only works with neovim
--- 0.8.
+
+-- TODO: Setup "gf" command to be able to jump to paths written using "." as
+-- path separator.
+-- Plugin nvim-lua-gf can to do this, but it only works with neovim 0.8
+
+-- Source vimscript files.
+-- vim.cmd("source " .. vim.fn.stdpath("config") .. "/vimscript/autocmd.vim")
+
+-- User level configs
 require("user/plugins")
 require("user/options")
 require("user/keymaps")

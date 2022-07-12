@@ -1,8 +1,15 @@
 " Vimscipt configuration for neovim to be sourced from lua
 
-" Source utility functions
+" First, source utility functions
 let dirpath = expand("<sfile>:p:h")
 execute "source" dirpath . '/utils.vim'
+
+" **********************************************************************
+"                           Auto-Commands
+" **********************************************************************
+"
+" Update date and time of last modification on writing buffer to file
+autocmd BufWritePre * call LastModified()
 
 " Switch between absolute and relative line numbers upon entering & leaving neovim.
 augroup numbertoggle
@@ -24,26 +31,17 @@ autocmd FileType html,xml let b:AutoPairs = AutoPairsDefine({ "<" : ">" })
 " Auto-complete HTML tags with omnicomplete
 autocmd FileType html inoremap </ </<C-x><C-o>
 
-" " Remove trailing whitespace & blank lines
-" autocmd FileType python,c,cpp,lua,vim autocmd BufWrite <buffer> %s/\s\+$//e
-" autocmd FileType python,c,cpp,lua,vim autocmd BufWrite <buffer> %s/\($\n\s*\)\+\%$//e
-
-" Use language-spedific plugins for indentation
-filetype plugin indent on
-
-" " This does not work
-" augroup UpdateLastMod
-"   autocmd!
-"   autocmd FileType lua autocmd BufWritePre <buffer> <SID>UpdateLastMod()<CR>
-" augroup END
-
-" New source code files are sourced from saved skeleton files
-autocmd BufNewFile *.lua 0read $NVIM_DATA_DIR/templates/template.lua
-autocmd BufNewFile *.c   0read $NVIM_DATA_DIR/templates/template.c
-autocmd BufNewFile *.cpp   0read $NVIM_DATA_DIR/templates/template.cpp
-autocmd BufNewFile *.py  0read $NVIM_DATA_DIR/templates/template.py
+" Startup program source code from skeleton files
+autocmd BufNewFile *.c    0r  ~/.local/share/nvim/skeletons/skeleton.c
+autocmd BufNewFile *.cpp  0r  ~/.local/share/nvim/skeletons/skeleton.cpp
+autocmd BufNewFile *.py   0r  ~/.local/share/nvim/skeletons/skeleton.py
+autocmd BufNewFile *.lua  0r  ~/.local/share/nvim/skeletons/skeleton.lua
+autocmd BufNewFile *.sh   0r  ~/.local/share/nvim/skeletons/skeleton.sh
 
 augroup PreciseTrimWhitespace
   autocmd!
   autocmd InsertLeave * call PreciseTrimWhitespace()
 augroup end
+
+" Use language-spedific plugins for indentation
+filetype plugin indent on

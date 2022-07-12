@@ -45,28 +45,32 @@ local diagnostics = null_ls.builtins.diagnostics
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
 null_ls.setup({
-  on_attach = function(client, bufnr)
-    if client.supports_method("textDocument/formatting") then
-      vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-      vim.api.nvim_create_autocmd("BufWritePre", {
-        group = augroup,
-        buffer = bufnr,
-        callback = function()
-          vim.lsp.buf.formatting({
-            bufnr = bufnr,
-            filter = function(cli)
-              return cli.name == "null-ls"
-            end,
-          })
-        end,
-      })
-    end
-  end,
-  debug = false,
-  sources = {
-    formatting.prettier.with({ extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" } }),
-    formatting.black.with({ extra_args = "--fast" }),
-    formatting.stylua,
-    diagnostics.flake8,
-  },
+	on_attach = function(client, bufnr)
+		if client.supports_method("textDocument/formatting") then
+			vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+			vim.api.nvim_create_autocmd("BufWritePre", {
+				group = augroup,
+				buffer = bufnr,
+				callback = function()
+					vim.lsp.buf.formatting_sync()
+					--> following must be vim.lsp.buf.formatting() for neovim 0.8
+					-- vim.lsp.buf.formatting_sync({
+					-- 	bufnr = bufnr,
+					-- 	filter = function(cli)
+					-- 		return cli.name == "null-ls"
+					-- 	end,
+					-- })
+				end,
+			})
+		end
+	end,
+	debug = false,
+	sources = {
+		formatting.prettier.with({ extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" } }),
+		formatting.black.with({ extra_args = "--fast" }),
+		formatting.stylua,
+		formatting.eslint,
+		diagnostics.flake8,
+		diagnostics.write_good,
+	},
 })

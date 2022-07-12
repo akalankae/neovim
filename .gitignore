@@ -5,3 +5,4 @@ plugin/
 /.netrwhist
 ojroques_init.lua
 ginit.vim
+vimscript/init.lua

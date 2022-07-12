@@ -65,8 +65,8 @@ nvim_tree.setup({
 				{ key = "L", action = "vsplit_preview", action_cb = vsplit_preview },
 				--> h: collpase current containing folder
 				{ key = "h", action = "close_node" },
-				--> H: collpase tree
-				{ key = "H", action = "collapse_all", action_cb = collapse_all },
+				--> H: collpase tree { This defaults to W }
+				-- { key = "H", action = "collapse_all", action_cb = collapse_all },
 			},
 		},
 	},

@@ -24,10 +24,12 @@
 -- CAUTION: If you exit a single vim buffer while one/more vim buffers remain open,
 -- this <Esc> to <CapsLock> mapping will be disabled for those opened buffers.
 vim.api.nvim_create_autocmd("VimEnter", {
-  pattern="*", command="silent! !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'"
+	pattern = "*",
+	command = "silent! !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'",
 })
 vim.api.nvim_create_autocmd("VimLeave", {
-  pattern="*", command="silent! !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Caps_Lock'"
+	pattern = "*",
+	command = "silent! !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Caps_Lock'",
 })
 
 -------------------------------------------------------------------------------
@@ -35,26 +37,33 @@ vim.api.nvim_create_autocmd("VimLeave", {
 -- Toggle/untoggle relative/absolute line numbers depending on active/inactive
 -- state of the buffers.
 -------------------------------------------------------------------------------
-local numbertoggle = vim.api.nvim_create_augroup( "numbertoggle", { clear=true } )
+local numbertoggle = vim.api.nvim_create_augroup("numbertoggle", { clear = true })
 
-vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained", "InsertLeave" },
-  { pattern = "*", command = "set relativenumber" , group = numbertoggle })
-vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost", "InsertEnter" },
-  { pattern = "*", command = "set norelativenumber", group = numbertoggle })
+vim.api.nvim_create_autocmd(
+	{ "BufEnter", "FocusGained", "InsertLeave" },
+	{ pattern = "*", command = "set relativenumber", group = numbertoggle }
+)
+vim.api.nvim_create_autocmd(
+	{ "BufLeave", "FocusLost", "InsertEnter" },
+	{ pattern = "*", command = "set norelativenumber", group = numbertoggle }
+)
 
 -- auto-pairs: Language dependant pairs
 -- Python F-strings and raw-strings
 vim.api.nvim_create_autocmd("FileType", {
-  pattern="python", command='let b:AutoPairs = AutoPairsDefine({"f\'":"\'", "r\'":"\'"})'
+	pattern = "python",
+	command = 'let b:AutoPairs = AutoPairsDefine({"f\'":"\'", "r\'":"\'"})',
 })
 -- Markup languages HTML/XML
 vim.api.nvim_create_autocmd("FileType", {
-  pattern={"html", "xml"}, command='let b:AutoPairs = AutoPairsDefine({"<":">"})'
+	pattern = { "html", "xml" },
+	command = 'let b:AutoPairs = AutoPairsDefine({"<":">"})',
 })
 
 -- Auto-complete HTML tags with omnicomplete ( <Ctrl-x><Ctrl-O> )
 vim.api.nvim_create_autocmd("FileType", {
-  pattern="html", command='set omnifunc=htmlcomplete#CompleteTags'
+	pattern = "html",
+	command = "set omnifunc=htmlcomplete#CompleteTags",
 })
 
 -- Start source code from skeleton files (templates)
@@ -62,51 +71,67 @@ vim.api.nvim_create_autocmd("FileType", {
 local skel_dir = vim.fn.stdpath("data") .. "/skeletons"
 
 vim.api.nvim_create_autocmd("BufNewFile", {
-  pattern="lua", command="0read " .. skel_dir .. "/skel.lua" })
+	pattern = "*.lua",
+	command = "0read " .. skel_dir .. "/skeleton.lua",
+})
 vim.api.nvim_create_autocmd("BufNewFile", {
-  pattern="c", command="0read " .. skel_dir .. "/skel.c" })
+	pattern = "*.c",
+	command = "0read " .. skel_dir .. "/skeleton.c",
+})
 vim.api.nvim_create_autocmd("BufNewFile", {
-  pattern="cpp", command="0read " .. skel_dir .. "/skel.cpp" })
+	pattern = "*.cpp",
+	command = "0read " .. skel_dir .. "/skeleton.cpp",
+})
 vim.api.nvim_create_autocmd("BufNewFile", {
-  pattern="python", command="0read " .. skel_dir .. "/skel.py" })
+	pattern = "*.py",
+	command = "0read " .. skel_dir .. "/skeleton.py",
+})
 
 -- Remove redundant whitespace from end of the line.
+-- Do not change anything else including cursor
 function TrimTrailingWhitespace()
-  if not vim.o.binary and vim.o.filetype ~= "diff" then
-    local current_view = vim.fn.winsaveview()
-    -- vim.cmd( [[ keepjumps '[,'s/\s+\+$//e ]] )
-    vim.cmd [[ keeppatterns %s/\s\+$//e ]]
-    vim.fn.winrestview(current_view)
-  end
+	if not vim.o.binary and vim.o.filetype ~= "diff" then
+		local current_view = vim.fn.winsaveview()
+		vim.cmd([[ keeppatterns %s/\s\+$//e ]])
+		vim.fn.winrestview(current_view)
+	end
 end
 
 -- Remove redundant newlines from end of the file.
+-- Do not change anything else including cursor
 function TrimTrailingNewlines()
-  if not vim.o.binary and vim.o.filetype ~= "diff" then
-    local cursor_pos = vim.fn.getpos(".")
-    vim.cmd( [[ silent! %s#\($\n\s*\)\+\%$## ]] )
-    vim.fn.setpos(".", cursor_pos)
-  end
+	if not vim.o.binary and vim.o.filetype ~= "diff" then
+		local cursor_pos = vim.fn.getpos(".")
+		vim.cmd([[ silent! %s#\($\n\s*\)\+\%$## ]])
+		vim.fn.setpos(".", cursor_pos)
+	end
 end
 
 -- Remove all redundant whitespace from source files etc
+-- Do not move cursor from where it is currently at
 function Cleanup()
-  TrimTrailingWhitespace()
-  TrimTrailingNewlines()
+	TrimTrailingWhitespace()
+	TrimTrailingNewlines()
 end
 
 -- Remove trailing whitespace & blank lines from filetypes that have following
 -- extensions
 local file_patterns = {
-  "*.py", "*.c", "*.cpp", "*.h", "*.lua", "*.vim", "*.sh"
+	"*.py",
+	"*.c",
+	"*.cpp",
+	"*.h",
+	"*.lua",
+	"*.vim",
+	"*.sh",
 }
 
---> Creating a group for a single autocommand to stop it from being registered
---> multiple times when it is sourced multiple times.
-local cleanup_ws_group = vim.api.nvim_create_augroup("RemoveWhitespace", { clear=true })
+-- Creating a group for a single autocommand to stop it from being registered
+-- multiple times when it is sourced multiple times.
+local cleanup_group = vim.api.nvim_create_augroup("RemoveWhitespace", { clear = true })
 
 vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = file_patterns,
-  callback = Cleanup,
-  group = cleanup_ws_group
+	pattern = file_patterns,
+	callback = Cleanup,
+	group = cleanup_group,
 })
