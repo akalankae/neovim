@@ -12,7 +12,7 @@ vim.opt.cindent = true
 vim.opt.breakindent = true
 
 -- Text dispaly area setup
-vim.opt.textwidth = 86
+vim.opt.textwidth = 80
 vim.opt.colorcolumn = '+1'
 vim.opt.signcolumn = 'yes'
 
