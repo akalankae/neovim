@@ -33,6 +33,10 @@ function M.setup()
   end
 
   local function plugins(use)
+    --------------------------------------------------------------------------
+    -- List of installed plugins
+    --------------------------------------------------------------------------
+    --> packer.nvim plugin manager
     use "wbthomason/packer.nvim"
 
       --> Splash screen
@@ -65,8 +69,21 @@ function M.setup()
     requires = { "kyazdani42/nvim-web-devicons", opt = true },
     }
 
-    --> Utility for coding
+    --> Utilities for coding
     use "jiangmiao/auto-pairs" --> autocomplete & link parenthesis
+    use "tpope/vim-commentary" --> gc/gcc to comment/uncomment in INSERT/VISUAL modes
+
+    --> Persistant floating terminal that can be toggled during a vim session
+    use "akinsho/toggleterm.nvim",
+
+    --> Highlight colorcodes in relavent colors
+    use { "norcalli/nvim-colorizer.lua",
+    config = function()
+      require("colorizer").setup()
+    end,
+    }
+
+    --------------------------------------------------------------------------
 
     if packer_bootstrap then
       print "Need to restart neovim after installation!"
