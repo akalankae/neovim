@@ -1,4 +1,7 @@
-local M = {}
+--> Configuration for packer.nvim
+--> Imported by plugin.lua
+
+local M = {} --> module namespace table
 
 function M.setup()
 
@@ -46,11 +49,16 @@ function M.setup()
     }
 
     --> Colors
+    --> TokyoNight colorscheme for VSCode
     use { "folke/tokyonight.nvim",
     config = function()
       vim.cmd [[ colorscheme tokyonight ]]
     end,
   }
+
+    use "tomasr/molokai" --> vim port of Monokai theme for TextMate
+    use "joshdick/onedark.vim" --> theme inspired by Atom
+    use "morhetz/gruvbox" --> Community Groove colorscheme
 
     --> Snappy statusline in lua
     use { "nvim-lualine/lualine.nvim",
