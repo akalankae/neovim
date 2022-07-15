@@ -16,10 +16,10 @@ vim.api.nvim_create_autocmd("VimLeave", {
 -- Switch between relative and absolute line numbers when editing and not.
 local numbertoggle = vim.api.nvim_create_augroup("NumberToggle", { clear=true })
 vim.api.nvim_create_autocmd({"BufEnter", "FocusGained", "InsertLeave"}, {
-	pattern = "*", once = true, group = numbertoggle,
+	pattern = "*", once = false, group = numbertoggle,
 	command = "set relativenumber",
 })
 vim.api.nvim_create_autocmd({"BufLeave", "FocusLost", "InsertEnter"}, {
-	pattern = "*", once = true, group = numbertoggle,
+	pattern = "*", once = false, group = numbertoggle,
 	command = "set norelativenumber",
 })
