@@ -42,4 +42,4 @@ endfunction
 " augroup END
 
 " Use skeleton file for lua
-autocmd BufNewFile *.lua 0read $NVIM_DATA_DIR/templates/skel.lua
+autocmd BufNewFile *.lua 0read $NVIM_DATA_DIR/skeletons/skeleton.lua
