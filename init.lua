@@ -7,3 +7,4 @@ require("user.plugins") --> "user/plugins.lua" requires "plugins/packer.lua"
 
 require("plugins.lualine")
 require("plugins.toggleterm")
+require("plugins.tree")

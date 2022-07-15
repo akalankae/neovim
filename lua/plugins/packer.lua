@@ -53,16 +53,14 @@ function M.setup()
     }
 
     --> Colors
-    --> TokyoNight colorscheme for VSCode
-    use { "folke/tokyonight.nvim",
+    use { "folke/tokyonight.nvim", --> ported from VSCode's TokyoNight theme
     config = function()
       vim.cmd [[ colorscheme tokyonight ]]
     end,
   }
-
     use "tomasr/molokai" --> vim port of Monokai theme for TextMate
     use "joshdick/onedark.vim" --> theme inspired by Atom
-    use "morhetz/gruvbox" --> Community Groove colorscheme
+    use "morhetz/gruvbox" --> retro groove colorscheme
 
     --> Snappy statusline in lua
     use { "nvim-lualine/lualine.nvim",
@@ -83,6 +81,11 @@ function M.setup()
     end,
     }
 
+    --> File explorer written in lua
+    use { "kyazdani42/nvim-tree.lua",
+    requires = { "kyazdani42/nvim-web-devicons" },
+    tag = "nightly",
+    }
     --------------------------------------------------------------------------
 
     if packer_bootstrap then
