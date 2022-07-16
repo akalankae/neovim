@@ -8,3 +8,4 @@ require("user.lazygit") --> launch lazygit in floating terminal (using toggleter
 
 require("plugins.lualine")
 require("plugins.toggleterm")
+require("plugins.nvim-tree")
