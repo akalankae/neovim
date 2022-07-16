@@ -24,3 +24,7 @@ vim.keymap.set("n", "<Leader>cl", "<cmd>nohlsearch<cr>")
 
 -- Launch splash screen
 vim.keymap.set("n", "<Leader>a", "<cmd>Alpha<cr>")
+
+-- Better indentation
+vim.keymap.set("v", "<", "<gv", { silent=true })
+vim.keymap.set("v", ">", ">gv", { silent=true })
