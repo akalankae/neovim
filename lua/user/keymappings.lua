@@ -19,12 +19,14 @@ vim.keymap.set("i", "<C-u>", "<esc>viwUea")
 -- Leader
 vim.g.mapleader = ";"
 
--- Clear highlighted text
-vim.keymap.set("n", "<Leader>cl", "<cmd>nohlsearch<cr>")
+local silent = { silent=true }
+
+-- Clear highlighted text with <Escape> key
+vim.keymap.set("n", "<ESC>", ":nohlsearch<Bar>:echo<cr>")
 
 -- Launch splash screen
 vim.keymap.set("n", "<Leader>a", "<cmd>Alpha<cr>")
 
 -- Better indentation
-vim.keymap.set("v", "<", "<gv", { silent=true })
-vim.keymap.set("v", ">", ">gv", { silent=true })
+vim.keymap.set("v", "<", "<gv", silent)
+vim.keymap.set("v", ">", ">gv", silent)
