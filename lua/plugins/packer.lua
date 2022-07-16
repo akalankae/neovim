@@ -58,15 +58,27 @@ function M.setup()
 
     use "tomasr/molokai" --> vim port of Monokai theme for TextMate
     use "joshdick/onedark.vim" --> theme inspired by Atom
-    use "morhetz/gruvbox" --> Community Groove colorscheme
+    use "morhetz/gruvbox" --> community groove colorscheme
+    use "tomasiser/vim-code-dark" --> inspired by Dark+ scheme of VSCode
 
     --> Snappy statusline in lua
-    use { "nvim-lualine/lualine.nvim",
-    requires = { "kyazdani42/nvim-web-devicons", opt = true },
-    }
+    use { "nvim-lualine/lualine.nvim", requires = { "kyazdani42/nvim-web-devicons", opt = true } }
 
     --> Utility for coding
     use "jiangmiao/auto-pairs" --> autocomplete & link parenthesis
+    use "tpope/vim-commentary" --> gc/gcc to comment/uncomment
+    use "norcalli/nvim-colorizer.lua" --> highlight colorcodes in relevant color
+
+    --> Git support
+    use { "lewis6991/gitsigns.nvim", 
+    requires = "nvim-lua/plenary.nvim",
+    config = function()
+      require("gitsigns").setup()
+    end
+    }
+
+    --> Persistant floating terminals that can be toggled
+    use "akinsho/toggleterm.nvim"
 
     if packer_bootstrap then
       print "Need to restart neovim after installation!"

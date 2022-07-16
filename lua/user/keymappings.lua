@@ -1,22 +1,26 @@
+-- Key Mappings
+
+-- Navigation between screen splits
+vim.keymap.set("n", "<C-j>", "<C-w>j")
+vim.keymap.set("n", "<C-k>", "<C-w>k")
+vim.keymap.set("n", "<C-l>", "<C-w>l")
+vim.keymap.set("n", "<C-h>", "<C-w>h")
+
+-- Ctrl-s to save in NORMAL and INSERT modes
+vim.keymap.set("n", "<C-s>", "<cmd>w<cr>") --> like nmap
+vim.keymap.set("i", "<C-s>", "<esc><cmd>w<cr>a") --> like imap
+
+-- Ctrl-q to close current split
+vim.keymap.set("n", "<C-q>", "<C-w>q") 
+
+-- Ckeymaptalize previous word in INSERT mode
+vim.keymap.set("i", "<C-u>", "<esc>viwUea") 
+
+-- Leader
 vim.g.mapleader = ";"
 
-local noremap = { noremap=true }
+-- Clear highlighted text
+vim.keymap.set("n", "<Leader>cl", "<cmd>nohlsearch<cr>")
 
---> Navigation between screen splits
-vim.api.nvim_set_keymap("n", "<C-j>", "<C-w>j", noremap)
-vim.api.nvim_set_keymap("n", "<C-k>", "<C-w>k", noremap)
-vim.api.nvim_set_keymap("n", "<C-l>", "<C-w>l", noremap)
-vim.api.nvim_set_keymap("n", "<C-h>", "<C-w>h", noremap)
-
---> Ctrl-s to save in NORMAL and INSERT modes
-vim.api.nvim_set_keymap("n", "<C-s>", "<cmd>w<cr>", noremap) --> like nmap
-vim.api.nvim_set_keymap("i", "<C-s>", "<esc><cmd>w<cr>a", noremap) --> like imap
-
---> Ctrl-q to close current split
-vim.api.nvim_set_keymap("n", "<C-q>", "<C-w>q", noremap) 
-
---> Clear highlighted text
-vim.api.nvim_set_keymap("n", "<Leader>cl", "<cmd>nohlsearch<cr>", noremap)
-
---> Capitalize previous word in INSERT mode
-vim.api.nvim_set_keymap("n", "<C-u>", "<esc>viwUea", noremap) 
+-- Launch splash screen
+vim.keymap.set("n", "<Leader>a", "<cmd>Alpha<cr>")
