@@ -1,5 +1,5 @@
 require("toggleterm").setup {
-  -- -- size can be a number or function which is passed the current terminal
+  -- size can be a number or function which is passed the current terminal
   size = 50,
   -- size = 20 | function(term)
   --   if term.direction == "horizontal" then
@@ -15,7 +15,7 @@ require("toggleterm").setup {
   hide_numbers = true,    -- hide the number column in toggleterm buffers
   shade_filetypes = {},
   shade_terminals = true,
-  shading_factor = 4,     -- degree by which to darken to terminal colour,
+  shading_factor = 3,     -- degree by which to darken to terminal colour,
                           -- default: 1 for dark backgrounds, 3 for light backgrounds
   start_in_insert = true,
   insert_mappings = true, -- whether the open mapping applies in insert mode or not
@@ -32,9 +32,9 @@ require("toggleterm").setup {
     -- the 'curved' border is a custom border type
     -- not natively supported but implemented in this plugin.
     -- border = 'single' | 'double' | 'shadow' | 'curved' | ... other options supported by win open
-    border = 'double',
-    -- width = <value>,
-    -- height = <value>,
+    border = 'curved',
+    width = 160,
+    height = 38,
     -- winblend = 3,
     windblend = 30,
     highlights = {
