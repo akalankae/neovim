@@ -74,18 +74,18 @@ function M.setup()
     --> Persistant floating terminal that can be toggled during a vim session
     use "akinsho/toggleterm.nvim",
 
-    --> Highlight colorcodes in relavent colors
-    use { "norcalli/nvim-colorizer.lua",
-    config = function()
-      require("colorizer").setup()
-    end,
-    }
+    ----> Highlight colorcodes in relavent colors
+    --use { "norcalli/nvim-colorizer.lua",
+    --config = function()
+    --  require("colorizer").setup()
+    --end,
+    --}
 
-    --> File explorer written in lua
-    use { "kyazdani42/nvim-tree.lua",
-    requires = { "kyazdani42/nvim-web-devicons" },
-    tag = "nightly",
-    }
+    ----> File explorer written in lua
+    --use { "kyazdani42/nvim-tree.lua",
+    --requires = { "kyazdani42/nvim-web-devicons" },
+    --tag = "nightly",
+    --}
     --------------------------------------------------------------------------
 
     if packer_bootstrap then
