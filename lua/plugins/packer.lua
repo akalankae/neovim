@@ -86,6 +86,13 @@ function M.setup()
     tag = "nightly",
     }
 
+    --> Show possible keybindings for a command as we type
+    use { "folke/which-key.nvim",
+    config = function()
+      require("plugins.whichkey").setup()
+    end,
+    }
+
     if packer_bootstrap then
       print "Need to restart neovim after installation!"
       require("packer").sync()
