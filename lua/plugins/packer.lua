@@ -33,6 +33,8 @@ function M.setup()
   end
 
   local function plugins(use)
+    --------------------------------------------------------------------------
+    --> Plugin manager
     use "wbthomason/packer.nvim"
 
       --> Splash screen
@@ -93,6 +95,27 @@ function M.setup()
     end,
     }
 
+    --> Treesitter
+    use { "nvim-treesitter/nvim-treesitter",
+    opt = true,
+    event = "BufRead",
+    run = "<cmd>TSUpdate",
+    config = function() 
+      -- use "lua/plugins/treesitter.lua" config file
+      require("plugins.treesitter").setup()
+    end,
+    requires = "nvim-treesitter/nvim-treesitter-textobjects",
+  }
+
+    --> IndentLine
+    use {
+      "lukas-reineke/indent-blankline.nvim",
+      event = "BufReadPre",
+      config = function()
+        require("plugins.indentblankline").setup()
+      end,
+    }
+    --------------------------------------------------------------------------
     if packer_bootstrap then
       print "Need to restart neovim after installation!"
       require("packer").sync()
